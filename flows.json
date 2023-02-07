@@ -1,0 +1,2238 @@
+[
+    {
+        "id": "c013c204891ecece",
+        "type": "tab",
+        "label": "ESP-32 Incoming Magnetic data",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "9fdaa411d8f44c69",
+        "type": "http response",
+        "z": "c013c204891ecece",
+        "name": "",
+        "statusCode": "200",
+        "headers": {},
+        "x": 580,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "44ce5b723106bf7e",
+        "type": "debug",
+        "z": "c013c204891ecece",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 590,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "5e4df993fb5fce8f",
+        "type": "http in",
+        "z": "c013c204891ecece",
+        "name": "",
+        "url": "/update-sensor",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 90,
+        "y": 480,
+        "wires": [
+            [
+                "4d13e234fa7cf9db"
+            ]
+        ]
+    },
+    {
+        "id": "4d13e234fa7cf9db",
+        "type": "function",
+        "z": "c013c204891ecece",
+        "name": "JSON Unpacker",
+        "func": "msg.payload1 = msg.payload.temperature;\nmsg.payload2 = msg.payload.magnetic;\nmsg.payload3 = msg.payload.id;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 280,
+        "y": 480,
+        "wires": [
+            [
+                "8613103d7edb496a",
+                "55f5b13c164ed6a6",
+                "8e1d9d64e6db090f",
+                "9fdaa411d8f44c69",
+                "ae05a245c07a7222",
+                "44ce5b723106bf7e",
+                "eddbc6124acc0719",
+                "30a8730a7282c4cd"
+            ]
+        ]
+    },
+    {
+        "id": "82675339031ffbbb",
+        "type": "change",
+        "z": "c013c204891ecece",
+        "name": "Temperature1",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload1",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 800,
+        "y": 480,
+        "wires": [
+            [
+                "6a43917c69dbe5f3",
+                "1ef018313d6d2b32"
+            ]
+        ]
+    },
+    {
+        "id": "54ac1da6bac578da",
+        "type": "change",
+        "z": "c013c204891ecece",
+        "name": "Magnetic",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload2",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 780,
+        "y": 520,
+        "wires": [
+            [
+                "fd09c7cdb0aefb37",
+                "4950ef023b9a716e"
+            ]
+        ]
+    },
+    {
+        "id": "fd09c7cdb0aefb37",
+        "type": "ui_chart",
+        "z": "c013c204891ecece",
+        "name": "",
+        "group": "bd7903e0e9c12805",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "label": "Magnetic",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "250",
+        "removeOlder": "1",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 940,
+        "y": 520,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8e1d9d64e6db090f",
+        "type": "function",
+        "z": "c013c204891ecece",
+        "name": "ID1 unpacker",
+        "func": "msg.payload3 = msg.payload.id;\nvar now = new Date();\n\nif (msg.payload3 == \"1\") {\n    return msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 590,
+        "y": 480,
+        "wires": [
+            [
+                "82675339031ffbbb",
+                "54ac1da6bac578da",
+                "af1203d67c08d8ec"
+            ]
+        ]
+    },
+    {
+        "id": "f679ce63750a7623",
+        "type": "change",
+        "z": "c013c204891ecece",
+        "name": "Temperature",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload1",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1670,
+        "y": 700,
+        "wires": [
+            [
+                "db0d5dc68e061598",
+                "1ef018313d6d2b32"
+            ]
+        ]
+    },
+    {
+        "id": "db0d5dc68e061598",
+        "type": "ui_chart",
+        "z": "c013c204891ecece",
+        "name": "",
+        "group": "e5c2c22b66ea501e",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "label": "Temperature",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "40",
+        "removeOlder": "1",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 1830,
+        "y": 700,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "37bec2986614218a",
+        "type": "change",
+        "z": "c013c204891ecece",
+        "name": "Magnetic",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload2",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 780,
+        "y": 740,
+        "wires": [
+            [
+                "6339f9fe8ee90f3c",
+                "c2ca919932454057"
+            ]
+        ]
+    },
+    {
+        "id": "6339f9fe8ee90f3c",
+        "type": "ui_chart",
+        "z": "c013c204891ecece",
+        "name": "",
+        "group": "e5c2c22b66ea501e",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "label": "Magnetic",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "1",
+        "ymax": "250",
+        "removeOlder": "4",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 940,
+        "y": 740,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "55f5b13c164ed6a6",
+        "type": "function",
+        "z": "c013c204891ecece",
+        "name": "ID2 Unpacker",
+        "func": "msg.payload3 = msg.payload.id;\n\nif (msg.payload3 == \"2\") {\n    return msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 700,
+        "wires": [
+            [
+                "f679ce63750a7623",
+                "37bec2986614218a",
+                "08697d1ddb6a7737"
+            ]
+        ]
+    },
+    {
+        "id": "ae05a245c07a7222",
+        "type": "exec",
+        "z": "c013c204891ecece",
+        "command": "ls /tmp",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "true",
+        "timer": "5",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 570,
+        "y": 380,
+        "wires": [
+            [],
+            [
+                "3cb31dbc041f294c"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "3cb31dbc041f294c",
+        "type": "debug",
+        "z": "c013c204891ecece",
+        "name": "debug 1",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 700,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "8613103d7edb496a",
+        "type": "function",
+        "z": "c013c204891ecece",
+        "name": "ID3 Unpacker",
+        "func": "msg.payload3 = msg.payload.id;\n\nif (msg.payload3 == \"3\") {\n    return msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 940,
+        "wires": [
+            [
+                "703798788aa4c1c8",
+                "105565af0a0e74bb",
+                "14931c211aae4b46"
+            ]
+        ]
+    },
+    {
+        "id": "703798788aa4c1c8",
+        "type": "change",
+        "z": "c013c204891ecece",
+        "name": "Temperature2",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload1",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 800,
+        "y": 940,
+        "wires": [
+            [
+                "89a07eb74f7e496c",
+                "ecdeb3170bc25976"
+            ]
+        ]
+    },
+    {
+        "id": "105565af0a0e74bb",
+        "type": "change",
+        "z": "c013c204891ecece",
+        "name": "Magnetic",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload2",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 780,
+        "y": 980,
+        "wires": [
+            [
+                "97c4cea3c6f45111",
+                "1b948d04e6997eee"
+            ]
+        ]
+    },
+    {
+        "id": "6a43917c69dbe5f3",
+        "type": "ui_chart",
+        "z": "c013c204891ecece",
+        "name": "",
+        "group": "bd7903e0e9c12805",
+        "order": 0,
+        "width": "0",
+        "height": "0",
+        "label": "Temperature",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "40",
+        "removeOlder": "1",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 990,
+        "y": 440,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "89a07eb74f7e496c",
+        "type": "ui_chart",
+        "z": "c013c204891ecece",
+        "name": "",
+        "group": "daa2a5702c494522",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "label": "Temperature",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "40",
+        "removeOlder": "1",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 990,
+        "y": 900,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "fc13abc691b0131d",
+        "type": "ui_toast",
+        "z": "c013c204891ecece",
+        "position": "top right",
+        "displayTime": "5",
+        "highlight": "Red",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "className": "",
+        "topic": "Warning",
+        "name": "",
+        "x": 1270,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "4950ef023b9a716e",
+        "type": "switch",
+        "z": "c013c204891ecece",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gte",
+                "v": "200",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 930,
+        "y": 560,
+        "wires": [
+            [
+                "14f6fe8f4abd6d24"
+            ]
+        ]
+    },
+    {
+        "id": "14f6fe8f4abd6d24",
+        "type": "change",
+        "z": "c013c204891ecece",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Magnetic of sensor 1 is too high.",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "",
+                "tot": "date"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1080,
+        "y": 560,
+        "wires": [
+            [
+                "fc13abc691b0131d"
+            ]
+        ]
+    },
+    {
+        "id": "97c4cea3c6f45111",
+        "type": "switch",
+        "z": "c013c204891ecece",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gte",
+                "v": "200",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 930,
+        "y": 1020,
+        "wires": [
+            [
+                "f8321edf86f94482"
+            ]
+        ]
+    },
+    {
+        "id": "f8321edf86f94482",
+        "type": "change",
+        "z": "c013c204891ecece",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Magnetic of sensor 3 is too high.",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1080,
+        "y": 1020,
+        "wires": [
+            [
+                "d5d078b2e8df5d1b"
+            ]
+        ]
+    },
+    {
+        "id": "e276f505fce571cc",
+        "type": "ui_toast",
+        "z": "c013c204891ecece",
+        "position": "top right",
+        "displayTime": "5",
+        "highlight": "Red",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "className": "",
+        "topic": "Warning",
+        "name": "",
+        "x": 1270,
+        "y": 780,
+        "wires": []
+    },
+    {
+        "id": "c2ca919932454057",
+        "type": "switch",
+        "z": "c013c204891ecece",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gte",
+                "v": "200",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 930,
+        "y": 780,
+        "wires": [
+            [
+                "b8f8bba6c698b73e"
+            ]
+        ]
+    },
+    {
+        "id": "b8f8bba6c698b73e",
+        "type": "change",
+        "z": "c013c204891ecece",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Magnetic of sensor 2 is too high.",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1080,
+        "y": 780,
+        "wires": [
+            [
+                "e276f505fce571cc"
+            ]
+        ]
+    },
+    {
+        "id": "d5d078b2e8df5d1b",
+        "type": "ui_toast",
+        "z": "c013c204891ecece",
+        "position": "top right",
+        "displayTime": "5",
+        "highlight": "Red",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "className": "",
+        "topic": "Warning",
+        "name": "",
+        "x": 1270,
+        "y": 1020,
+        "wires": []
+    },
+    {
+        "id": "358ef98129063978",
+        "type": "function",
+        "z": "c013c204891ecece",
+        "name": "function 1",
+        "func": "var num1 = parseFloat(msg.payload[0]);\nvar num2 = parseFloat(msg.payload[1]);\n\nmsg.difference = num2 - num1;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2160,
+        "y": 500,
+        "wires": [
+            [
+                "96b275333c46ee55",
+                "b6f6f5319652aaa7"
+            ]
+        ]
+    },
+    {
+        "id": "96b275333c46ee55",
+        "type": "debug",
+        "z": "c013c204891ecece",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "difference",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2340,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "1ef018313d6d2b32",
+        "type": "join",
+        "z": "c013c204891ecece",
+        "name": "",
+        "mode": "custom",
+        "build": "array",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": false,
+        "timeout": "",
+        "count": "2",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 1970,
+        "y": 480,
+        "wires": [
+            [
+                "358ef98129063978",
+                "86e4cf91d2bee269"
+            ]
+        ]
+    },
+    {
+        "id": "86e4cf91d2bee269",
+        "type": "debug",
+        "z": "c013c204891ecece",
+        "name": "debug 4",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2160,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "b1a0c0494c456f80",
+        "type": "switch",
+        "z": "c013c204891ecece",
+        "name": "",
+        "property": "difference",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "btwn",
+                "v": "-5",
+                "vt": "num",
+                "v2": "5",
+                "v2t": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 2470,
+        "y": 500,
+        "wires": [
+            [
+                "5307fdd4a8fac08f"
+            ]
+        ]
+    },
+    {
+        "id": "f15261d2801d30d1",
+        "type": "ui_toast",
+        "z": "c013c204891ecece",
+        "position": "top right",
+        "displayTime": "5",
+        "highlight": "Red",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "className": "",
+        "topic": "Warning",
+        "name": "",
+        "x": 2810,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "5307fdd4a8fac08f",
+        "type": "change",
+        "z": "c013c204891ecece",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "The gas does not seem to be flowing",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 2620,
+        "y": 500,
+        "wires": [
+            [
+                "f15261d2801d30d1"
+            ]
+        ]
+    },
+    {
+        "id": "eddbc6124acc0719",
+        "type": "debug",
+        "z": "c013c204891ecece",
+        "name": "debug 5",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 580,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "af1203d67c08d8ec",
+        "type": "function",
+        "z": "c013c204891ecece",
+        "name": "Set Data",
+        "func": "var now = new Date();\nmsg.payload0 = new Date();\n\nmsg.payload = {\n    \"timestamp\": msg.payload0,\n    \"temperature\": msg.payload1,\n    \"magnetic\": msg.payload2\n}\nreturn msg; ",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 780,
+        "y": 620,
+        "wires": [
+            [
+                "60516f621d9559e5"
+            ]
+        ]
+    },
+    {
+        "id": "60516f621d9559e5",
+        "type": "function",
+        "z": "c013c204891ecece",
+        "name": "Filename generator",
+        "func": "// Get the current time and convert it to text\nvar now = new Date();\nvar ss = now.getSeconds() < 10 ? \"0\" + now.getSeconds() : now.getSeconds();\nvar mmm = now.getMinutes() < 10 ? \"0\" + now.getMinutes() : now.getMinutes();\nvar hh = now.getHours() < 10 ? \"0\" + now.getHours() : now.getHours();\nvar dd = now.getDay() < 10 ? \"0\" + now.getDate() : now.getDate();\nvar mm = now.getMonth() < 9 ? \"0\" + (now.getMonth() + 1) : now.getMonth() + 1; // getMonth() is zero-based\nvar yyyy = now.getFullYear();\n\n// Generate out file name pattern\nmsg.fname = \"ECAMI_\" + dd +\"-\" + mm + \"-\" + yyyy + \"-\" + \"ID1\" + \".csv\";\n\n// ?? Full filename with path for the file node later\nmsg.filename = \"/home/Thomas/Data/\" + msg.fname;\n\n// We save the current payload into a different place on the msg object\nmsg.filecontent = msg.payload;\n\n// Passing the file name search pattern to fs node tell us if the file exitst or not\nmsg.payload = {\"pattern\":msg.fname};\n\nnode.status({fill:\"blue\",shape:\"ring\",text:msg.fname});\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 950,
+        "y": 620,
+        "wires": [
+            [
+                "fcbe9348618982c2"
+            ]
+        ]
+    },
+    {
+        "id": "fcbe9348618982c2",
+        "type": "fs-file-lister",
+        "z": "c013c204891ecece",
+        "name": "",
+        "start": "/home/Thomas/Data/",
+        "pattern": "*.*",
+        "folders": "*",
+        "hidden": true,
+        "lstype": "files",
+        "path": true,
+        "single": true,
+        "depth": 0,
+        "stat": true,
+        "showWarnings": false,
+        "x": 1120,
+        "y": 620,
+        "wires": [
+            [
+                "aa6ca0fa78220174"
+            ]
+        ]
+    },
+    {
+        "id": "aa6ca0fa78220174",
+        "type": "switch",
+        "z": "c013c204891ecece",
+        "name": "",
+        "property": "$count(msg.payload)",
+        "propertyType": "jsonata",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "num"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1270,
+        "y": 620,
+        "wires": [
+            [
+                "7a0974c23823e652"
+            ],
+            [
+                "43e837040a864c7d"
+            ]
+        ]
+    },
+    {
+        "id": "7a0974c23823e652",
+        "type": "change",
+        "z": "c013c204891ecece",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "filecontent",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1440,
+        "y": 600,
+        "wires": [
+            [
+                "96250c68f71ab5f6"
+            ]
+        ]
+    },
+    {
+        "id": "43e837040a864c7d",
+        "type": "change",
+        "z": "c013c204891ecece",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "filecontent",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1440,
+        "y": 640,
+        "wires": [
+            [
+                "7a40fdbd23a7085d"
+            ]
+        ]
+    },
+    {
+        "id": "96250c68f71ab5f6",
+        "type": "csv",
+        "z": "c013c204891ecece",
+        "name": "",
+        "sep": ",",
+        "hdrin": "",
+        "hdrout": "all",
+        "multi": "one",
+        "ret": "\\n",
+        "temp": "timestamp,temperature,magnetic",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": "",
+        "x": 1590,
+        "y": 600,
+        "wires": [
+            [
+                "178413f6586b8a9f"
+            ]
+        ]
+    },
+    {
+        "id": "7a40fdbd23a7085d",
+        "type": "csv",
+        "z": "c013c204891ecece",
+        "name": "",
+        "sep": ",",
+        "hdrin": "",
+        "hdrout": "none",
+        "multi": "one",
+        "ret": "\\n",
+        "temp": "timestamp,temperature,magnetic",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": "",
+        "x": 1590,
+        "y": 640,
+        "wires": [
+            [
+                "178413f6586b8a9f"
+            ]
+        ]
+    },
+    {
+        "id": "178413f6586b8a9f",
+        "type": "file",
+        "z": "c013c204891ecece",
+        "name": "",
+        "filename": "filename",
+        "filenameType": "msg",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 1740,
+        "y": 620,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "08697d1ddb6a7737",
+        "type": "function",
+        "z": "c013c204891ecece",
+        "name": "Set Data",
+        "func": "var now = new Date();\nmsg.payload0 = new Date();\n\nmsg.payload = {\n    \"timestamp\": msg.payload0,\n    \"temperature\": msg.payload1,\n    \"magnetic\": msg.payload2\n}\nreturn msg; ",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 780,
+        "y": 840,
+        "wires": [
+            [
+                "121c2c25e27734ab"
+            ]
+        ]
+    },
+    {
+        "id": "121c2c25e27734ab",
+        "type": "function",
+        "z": "c013c204891ecece",
+        "name": "Filename generator",
+        "func": "// Get the current time and convert it to text\nvar now = new Date();\nvar ss = now.getSeconds() < 10 ? \"0\" + now.getSeconds() : now.getSeconds();\nvar mmm = now.getMinutes() < 10 ? \"0\" + now.getMinutes() : now.getMinutes();\nvar hh = now.getHours() < 10 ? \"0\" + now.getHours() : now.getHours();\nvar dd = now.getDay() < 10 ? \"0\" + now.getDate() : now.getDate();\nvar mm = now.getMonth() < 9 ? \"0\" + (now.getMonth() + 1) : now.getMonth() + 1; // getMonth() is zero-based\nvar yyyy = now.getFullYear();\n\n// Generate out file name pattern\nmsg.fname = \"ECAMI_\" + dd + \"-\" + mm + \"-\" + yyyy + \"-\" + \"ID2\" + \".csv\";\n\n// ?? Full filename with path for the file node later\nmsg.filename = \"/home/Thomas/Data/\" + msg.fname;\n\n// We save the current payload into a different place on the msg object\nmsg.filecontent = msg.payload;\n\n// Passing the file name search pattern to fs node tell us if the file exitst or not\nmsg.payload = {\"pattern\":msg.fname};\n\nnode.status({fill:\"blue\",shape:\"ring\",text:msg.fname});\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 950,
+        "y": 840,
+        "wires": [
+            [
+                "4b8b5e94ea08a871"
+            ]
+        ]
+    },
+    {
+        "id": "4b8b5e94ea08a871",
+        "type": "fs-file-lister",
+        "z": "c013c204891ecece",
+        "name": "",
+        "start": "/home/Thomas/Data/",
+        "pattern": "*.*",
+        "folders": "*",
+        "hidden": true,
+        "lstype": "files",
+        "path": true,
+        "single": true,
+        "depth": 0,
+        "stat": true,
+        "showWarnings": false,
+        "x": 1120,
+        "y": 840,
+        "wires": [
+            [
+                "b880f38bb8995733"
+            ]
+        ]
+    },
+    {
+        "id": "b880f38bb8995733",
+        "type": "switch",
+        "z": "c013c204891ecece",
+        "name": "",
+        "property": "$count(msg.payload)",
+        "propertyType": "jsonata",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "num"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1270,
+        "y": 840,
+        "wires": [
+            [
+                "4d235531882295e7"
+            ],
+            [
+                "bcc3bff4727aafeb"
+            ]
+        ]
+    },
+    {
+        "id": "4d235531882295e7",
+        "type": "change",
+        "z": "c013c204891ecece",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "filecontent",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1440,
+        "y": 820,
+        "wires": [
+            [
+                "4218cbe6c26f862e"
+            ]
+        ]
+    },
+    {
+        "id": "bcc3bff4727aafeb",
+        "type": "change",
+        "z": "c013c204891ecece",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "filecontent",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1440,
+        "y": 860,
+        "wires": [
+            [
+                "12a049ae304d138e"
+            ]
+        ]
+    },
+    {
+        "id": "4218cbe6c26f862e",
+        "type": "csv",
+        "z": "c013c204891ecece",
+        "name": "",
+        "sep": ",",
+        "hdrin": "",
+        "hdrout": "all",
+        "multi": "one",
+        "ret": "\\n",
+        "temp": "timestamp,temperature,magnetic",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": "",
+        "x": 1590,
+        "y": 820,
+        "wires": [
+            [
+                "7de90c79206f55ce"
+            ]
+        ]
+    },
+    {
+        "id": "12a049ae304d138e",
+        "type": "csv",
+        "z": "c013c204891ecece",
+        "name": "",
+        "sep": ",",
+        "hdrin": "",
+        "hdrout": "none",
+        "multi": "one",
+        "ret": "\\n",
+        "temp": "timestamp,temperature,magnetic",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": "",
+        "x": 1590,
+        "y": 860,
+        "wires": [
+            [
+                "7de90c79206f55ce"
+            ]
+        ]
+    },
+    {
+        "id": "7de90c79206f55ce",
+        "type": "file",
+        "z": "c013c204891ecece",
+        "name": "",
+        "filename": "filename",
+        "filenameType": "msg",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 1740,
+        "y": 840,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "14931c211aae4b46",
+        "type": "function",
+        "z": "c013c204891ecece",
+        "name": "Set Data",
+        "func": "var now = new Date();\nmsg.payload0 = new Date();\n\nmsg.payload = {\n    \"timestamp\": msg.payload0,\n    \"temperature\": msg.payload1,\n    \"magnetic\": msg.payload2\n}\nreturn msg; ",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 780,
+        "y": 1080,
+        "wires": [
+            [
+                "627f9094d9b5e3b7"
+            ]
+        ]
+    },
+    {
+        "id": "627f9094d9b5e3b7",
+        "type": "function",
+        "z": "c013c204891ecece",
+        "name": "Filename generator",
+        "func": "// Get the current time and convert it to text\nvar now = new Date();\nvar ss = now.getSeconds() < 10 ? \"0\" + now.getSeconds() : now.getSeconds();\nvar mmm = now.getMinutes() < 10 ? \"0\" + now.getMinutes() : now.getMinutes();\nvar hh = now.getHours() < 10 ? \"0\" + now.getHours() : now.getHours();\nvar dd = now.getDay() < 10 ? \"0\" + now.getDate() : now.getDate();\nvar mm = now.getMonth() < 9 ? \"0\" + (now.getMonth() + 1) : now.getMonth() + 1; // getMonth() is zero-based\nvar yyyy = now.getFullYear();\n\n// Generate out file name pattern\nmsg.fname = \"ECAMI_\" + dd + \"-\" + mm + \"-\" + yyyy + \"-\" + \"ID3\" + \".csv\";\n\n// ?? Full filename with path for the file node later\nmsg.filename = \"/home/Thomas/Data/\" + msg.fname;\n\n// We save the current payload into a different place on the msg object\nmsg.filecontent = msg.payload;\n\n// Passing the file name search pattern to fs node tell us if the file exitst or not\nmsg.payload = {\"pattern\":msg.fname};\n\nnode.status({fill:\"blue\",shape:\"ring\",text:msg.fname});\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 950,
+        "y": 1080,
+        "wires": [
+            [
+                "84a7584236d7bd4d"
+            ]
+        ]
+    },
+    {
+        "id": "84a7584236d7bd4d",
+        "type": "fs-file-lister",
+        "z": "c013c204891ecece",
+        "name": "",
+        "start": "/home/Thomas/Data/",
+        "pattern": "*.*",
+        "folders": "*",
+        "hidden": true,
+        "lstype": "files",
+        "path": true,
+        "single": true,
+        "depth": 0,
+        "stat": true,
+        "showWarnings": false,
+        "x": 1120,
+        "y": 1080,
+        "wires": [
+            [
+                "7f0dc52a26a8e190"
+            ]
+        ]
+    },
+    {
+        "id": "7f0dc52a26a8e190",
+        "type": "switch",
+        "z": "c013c204891ecece",
+        "name": "",
+        "property": "$count(msg.payload)",
+        "propertyType": "jsonata",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "num"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1270,
+        "y": 1080,
+        "wires": [
+            [
+                "597d8c372054072e"
+            ],
+            [
+                "449b34584c88ae41"
+            ]
+        ]
+    },
+    {
+        "id": "597d8c372054072e",
+        "type": "change",
+        "z": "c013c204891ecece",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "filecontent",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1440,
+        "y": 1060,
+        "wires": [
+            [
+                "9294c0a0147055b9"
+            ]
+        ]
+    },
+    {
+        "id": "449b34584c88ae41",
+        "type": "change",
+        "z": "c013c204891ecece",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "filecontent",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1440,
+        "y": 1100,
+        "wires": [
+            [
+                "eeb653df468ffd72"
+            ]
+        ]
+    },
+    {
+        "id": "9294c0a0147055b9",
+        "type": "csv",
+        "z": "c013c204891ecece",
+        "name": "",
+        "sep": ",",
+        "hdrin": "",
+        "hdrout": "all",
+        "multi": "one",
+        "ret": "\\n",
+        "temp": "timestamp,temperature,magnetic",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": "",
+        "x": 1590,
+        "y": 1060,
+        "wires": [
+            [
+                "fb99307c78de010e"
+            ]
+        ]
+    },
+    {
+        "id": "eeb653df468ffd72",
+        "type": "csv",
+        "z": "c013c204891ecece",
+        "name": "",
+        "sep": ",",
+        "hdrin": "",
+        "hdrout": "none",
+        "multi": "one",
+        "ret": "\\n",
+        "temp": "timestamp,temperature,magnetic",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": "",
+        "x": 1590,
+        "y": 1100,
+        "wires": [
+            [
+                "fb99307c78de010e"
+            ]
+        ]
+    },
+    {
+        "id": "fb99307c78de010e",
+        "type": "file",
+        "z": "c013c204891ecece",
+        "name": "",
+        "filename": "filename",
+        "filenameType": "msg",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 1740,
+        "y": 1080,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1b948d04e6997eee",
+        "type": "ui_chart",
+        "z": "c013c204891ecece",
+        "name": "",
+        "group": "daa2a5702c494522",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "label": "Magnetic",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "250",
+        "removeOlder": "1",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 940,
+        "y": 980,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "30a8730a7282c4cd",
+        "type": "function",
+        "z": "c013c204891ecece",
+        "name": "ID4 Unpacker",
+        "func": "msg.payload3 = msg.payload.id;\n\nif (msg.payload3 == \"4\") {\n    return msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 1160,
+        "wires": [
+            [
+                "a989b9bdfbc952fe",
+                "c2910273e8839572",
+                "145e3883b0184113"
+            ]
+        ]
+    },
+    {
+        "id": "a989b9bdfbc952fe",
+        "type": "change",
+        "z": "c013c204891ecece",
+        "name": "Temperature2",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload1",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1660,
+        "y": 1160,
+        "wires": [
+            [
+                "f20e0f34c952aafe",
+                "ecdeb3170bc25976"
+            ]
+        ]
+    },
+    {
+        "id": "c2910273e8839572",
+        "type": "change",
+        "z": "c013c204891ecece",
+        "name": "Magnetic",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload2",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 780,
+        "y": 1200,
+        "wires": [
+            [
+                "36b2ea3d44e4c146",
+                "f359dcb9a037b75e"
+            ]
+        ]
+    },
+    {
+        "id": "f20e0f34c952aafe",
+        "type": "ui_chart",
+        "z": "c013c204891ecece",
+        "name": "",
+        "group": "07886581852785ad",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "label": "Temperature",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "40",
+        "removeOlder": "1",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 1830,
+        "y": 1160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "36b2ea3d44e4c146",
+        "type": "switch",
+        "z": "c013c204891ecece",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gte",
+                "v": "200",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 930,
+        "y": 1240,
+        "wires": [
+            [
+                "dab3b3dab543d75b"
+            ]
+        ]
+    },
+    {
+        "id": "dab3b3dab543d75b",
+        "type": "change",
+        "z": "c013c204891ecece",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Magnetic of sensor 3 is too high.",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1080,
+        "y": 1240,
+        "wires": [
+            [
+                "8ed3acb359056a54"
+            ]
+        ]
+    },
+    {
+        "id": "8ed3acb359056a54",
+        "type": "ui_toast",
+        "z": "c013c204891ecece",
+        "position": "top right",
+        "displayTime": "5",
+        "highlight": "Red",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "className": "",
+        "topic": "Warning",
+        "name": "",
+        "x": 1270,
+        "y": 1240,
+        "wires": []
+    },
+    {
+        "id": "145e3883b0184113",
+        "type": "function",
+        "z": "c013c204891ecece",
+        "name": "Set Data",
+        "func": "var now = new Date();\nmsg.payload0 = new Date();\n\nmsg.payload = {\n    \"timestamp\": msg.payload0,\n    \"temperature\": msg.payload1,\n    \"magnetic\": msg.payload2\n}\nreturn msg; ",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 780,
+        "y": 1300,
+        "wires": [
+            [
+                "61f4652424d6f438"
+            ]
+        ]
+    },
+    {
+        "id": "61f4652424d6f438",
+        "type": "function",
+        "z": "c013c204891ecece",
+        "name": "Filename generator",
+        "func": "// Get the current time and convert it to text\nvar now = new Date();\nvar ss = now.getSeconds() < 10 ? \"0\" + now.getSeconds() : now.getSeconds();\nvar mmm = now.getMinutes() < 10 ? \"0\" + now.getMinutes() : now.getMinutes();\nvar hh = now.getHours() < 10 ? \"0\" + now.getHours() : now.getHours();\nvar dd = now.getDay() < 10 ? \"0\" + now.getDate() : now.getDate();\nvar mm = now.getMonth() < 9 ? \"0\" + (now.getMonth() + 1) : now.getMonth() + 1; // getMonth() is zero-based\nvar yyyy = now.getFullYear();\n\n// Generate out file name pattern\nmsg.fname = \"ECAMI_\" + dd + \"-\" + mm + \"-\" + yyyy + \"-\" + \"ID4\" + \".csv\";\n\n// ?? Full filename with path for the file node later\nmsg.filename = \"/home/Thomas/Data/\" + msg.fname;\n\n// We save the current payload into a different place on the msg object\nmsg.filecontent = msg.payload;\n\n// Passing the file name search pattern to fs node tell us if the file exitst or not\nmsg.payload = {\"pattern\":msg.fname};\n\nnode.status({fill:\"blue\",shape:\"ring\",text:msg.fname});\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 950,
+        "y": 1300,
+        "wires": [
+            [
+                "938d87038bb4dc89"
+            ]
+        ]
+    },
+    {
+        "id": "938d87038bb4dc89",
+        "type": "fs-file-lister",
+        "z": "c013c204891ecece",
+        "name": "",
+        "start": "/home/Thomas/Data/",
+        "pattern": "*.*",
+        "folders": "*",
+        "hidden": true,
+        "lstype": "files",
+        "path": true,
+        "single": true,
+        "depth": 0,
+        "stat": true,
+        "showWarnings": false,
+        "x": 1120,
+        "y": 1300,
+        "wires": [
+            [
+                "6fce585288b319e7"
+            ]
+        ]
+    },
+    {
+        "id": "6fce585288b319e7",
+        "type": "switch",
+        "z": "c013c204891ecece",
+        "name": "",
+        "property": "$count(msg.payload)",
+        "propertyType": "jsonata",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "num"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1270,
+        "y": 1300,
+        "wires": [
+            [
+                "5a9171267d2a2ebf"
+            ],
+            [
+                "6680c08cbdeb683c"
+            ]
+        ]
+    },
+    {
+        "id": "5a9171267d2a2ebf",
+        "type": "change",
+        "z": "c013c204891ecece",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "filecontent",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1440,
+        "y": 1280,
+        "wires": [
+            [
+                "770fc6e75c49bcb3"
+            ]
+        ]
+    },
+    {
+        "id": "6680c08cbdeb683c",
+        "type": "change",
+        "z": "c013c204891ecece",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "filecontent",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1440,
+        "y": 1320,
+        "wires": [
+            [
+                "393c5ad5ed3de125"
+            ]
+        ]
+    },
+    {
+        "id": "770fc6e75c49bcb3",
+        "type": "csv",
+        "z": "c013c204891ecece",
+        "name": "",
+        "sep": ",",
+        "hdrin": "",
+        "hdrout": "all",
+        "multi": "one",
+        "ret": "\\n",
+        "temp": "timestamp,temperature,magnetic",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": "",
+        "x": 1590,
+        "y": 1280,
+        "wires": [
+            [
+                "78e7d449246c9ee7"
+            ]
+        ]
+    },
+    {
+        "id": "393c5ad5ed3de125",
+        "type": "csv",
+        "z": "c013c204891ecece",
+        "name": "",
+        "sep": ",",
+        "hdrin": "",
+        "hdrout": "none",
+        "multi": "one",
+        "ret": "\\n",
+        "temp": "timestamp,temperature,magnetic",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": "",
+        "x": 1590,
+        "y": 1320,
+        "wires": [
+            [
+                "78e7d449246c9ee7"
+            ]
+        ]
+    },
+    {
+        "id": "78e7d449246c9ee7",
+        "type": "file",
+        "z": "c013c204891ecece",
+        "name": "",
+        "filename": "filename",
+        "filenameType": "msg",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 1740,
+        "y": 1300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f359dcb9a037b75e",
+        "type": "ui_chart",
+        "z": "c013c204891ecece",
+        "name": "",
+        "group": "07886581852785ad",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "label": "Magnetic",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "250",
+        "removeOlder": "1",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 940,
+        "y": 1200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "16ac7cfa7bf9726e",
+        "type": "function",
+        "z": "c013c204891ecece",
+        "name": "function 2",
+        "func": "var num1 = parseFloat(msg.payload[0]);\nvar num2 = parseFloat(msg.payload[1]);\n\nmsg.difference = num2 - num1;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2160,
+        "y": 960,
+        "wires": [
+            [
+                "338f3c0945445cf9"
+            ]
+        ]
+    },
+    {
+        "id": "338f3c0945445cf9",
+        "type": "debug",
+        "z": "c013c204891ecece",
+        "name": "debug 6",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "difference",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2320,
+        "y": 1000,
+        "wires": []
+    },
+    {
+        "id": "ecdeb3170bc25976",
+        "type": "join",
+        "z": "c013c204891ecece",
+        "name": "",
+        "mode": "custom",
+        "build": "array",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": false,
+        "timeout": "",
+        "count": "2",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 1970,
+        "y": 940,
+        "wires": [
+            [
+                "16ac7cfa7bf9726e",
+                "7691003db99db73b"
+            ]
+        ]
+    },
+    {
+        "id": "7691003db99db73b",
+        "type": "debug",
+        "z": "c013c204891ecece",
+        "name": "debug 7",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2160,
+        "y": 920,
+        "wires": []
+    },
+    {
+        "id": "b6f6f5319652aaa7",
+        "type": "delay",
+        "z": "c013c204891ecece",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 2340,
+        "y": 500,
+        "wires": [
+            [
+                "b1a0c0494c456f80"
+            ]
+        ]
+    },
+    {
+        "id": "bd7903e0e9c12805",
+        "type": "ui_group",
+        "name": "Sensor 1",
+        "tab": "bfd0e7a7907333b6",
+        "order": 1,
+        "disp": true,
+        "width": "14",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "e5c2c22b66ea501e",
+        "type": "ui_group",
+        "name": "Sensor 2",
+        "tab": "bfd0e7a7907333b6",
+        "order": 2,
+        "disp": true,
+        "width": "14",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "daa2a5702c494522",
+        "type": "ui_group",
+        "name": "Sensor 3",
+        "tab": "bfd0e7a7907333b6",
+        "order": 3,
+        "disp": true,
+        "width": "14",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "07886581852785ad",
+        "type": "ui_group",
+        "name": "Sensor 4",
+        "tab": "bfd0e7a7907333b6",
+        "order": 4,
+        "disp": true,
+        "width": "14",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "bfd0e7a7907333b6",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]
